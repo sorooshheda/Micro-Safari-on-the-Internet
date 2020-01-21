@@ -242,111 +242,6 @@ void AutoMoveSineKinda() {
 
 
 
-/*
-  void AutoMoveSine() {
-  if ((digitalRead(XNegLimit) == HIGH) && (digitalRead(XPosLimit) == HIGH) && (stepperX.distanceToGo() == 0)) {
-    stepperX.moveTo(CartridgeWidth);
-    stepperX.setSpeed(200.0);
-  }
-  stepperY.move(1);
-  stepperY.setSpeed(TrueYSpeed(1));
-  if (digitalRead(XNegLimit) == LOW) {
-    stepperX.moveTo(CartridgeWidth);
-    stepperX.setSpeed(200.0);
-    }
-
-  if (digitalRead(XPosLimit) == LOW) {
-    stepperX.moveTo(0);
-    stepperX.setSpeed(-200.0);
-
-  }
-  stepperX.runSpeed();
-  stepperY.runSpeed();
-  }
-*/
-
-
-
-
-
-
-
-//move the stage to a random location every n seconds
-void AutoMoveRandomRetry() {
-  TimeSincePause = millis() - PauseTime;
-    //choose a new location if waited for long enough
-  if ((TimeSincePause > PauseInterval)&&(stepperX.distanceToGo()==0)&&(stepperY.distanceToGo()==0)) {
-    stepperX.moveTo(random(0, CartridgeWidth));
-    stepperY.move(random(-255, 255));   
-    PauseTime = millis(); 
-  }
-  if(stepperX.distanceToGo()>0){
-  stepperX.setSpeed((stepperX.distanceToGo() / 5));
-  }
-    if(stepperX.distanceToGo()<0){
-  stepperX.setSpeed(-(stepperX.distanceToGo() / 5));
-  }
-    if(stepperY.distanceToGo()>0){
-  stepperY.setSpeed((stepperY.distanceToGo()));
-  }
-    if(stepperY.distanceToGo()<0){
-  stepperY.setSpeed(-(stepperY.distanceToGo()));
-  }
-
-  stepperX.runSpeed();
-  stepperY.runSpeed();
-
-
-}
-
-
-
-
-
-
-
-
-
-
-/*
-  //move the stage to a random location every n seconds
-  void AutoMoveRandom() {
-  //choose a new location if waited for long enough
-  if (TimeSincePause > PauseInterval) {
-    stepperX.moveTo(random(0, CartridgeWidth));
-    stepperY.move(random(-255, 255));
-    //if statements calculate the x and y speeds needed to get to position at same time.
-    if (stepperX.distanceToGo() > 0) {
-      stepperX.maxSpeed((StandardSpeed * stepperY.distanceToGo())*sqrt((stepperX.distanceToGo() ^ 2) + (stepperY.distanceToGo() ^ 2)));
-    }
-    if (stepperX.distanceToGo() < 0) {
-      stepperX.maxSpeed(-(StandardSpeed * stepperY.distanceToGo())*sqrt((stepperX.distanceToGo() ^ 2) + (stepperY.distanceToGo() ^ 2)));
-    }
-    if (stepperY.distanceToGo() > 0) {
-      stepperY.maxSpeed((StandardSpeed * stepperX.distanceToGo())*sqrt((stepperY.distanceToGo() ^ 2) + (stepperX.distanceToGo() ^ 2)));
-    }
-    if (stepperY.distanceToGo() < 0) {
-      stepperY.maxSpeed(-(StandardSpeed * stepperX.distanceToGo())*sqrt((stepperY.distanceToGo() ^ 2) + (stepperX.distanceToGo() ^ 2)));
-    }
-    PauseTime = millis();
-  }
-
-  stepperX.run();
-  stepperY.run();
-  TimeSincePause = millis() - PauseTime;
-
-  }
-
-*/
-
-
-
-
-
-
-
-
-
 //input speed for Y axis, output true speed based on radially how far from the center of the circle the X axis is.
 //output_speed == input_speed at outermost viewable diameter of cartridge (i.e: current position == 11304 steps)
 int TrueYSpeed(int input_speed) {
@@ -354,11 +249,6 @@ int TrueYSpeed(int input_speed) {
   return output_speed;
 }
 
-/*
-  int TrueYSpeedmod(int input_speed) {
-  int output_speed = (input_speed + (input_speed / (12890 / (1586 + stepperX.currentPosition()))));
-  //Serial.println(150 *((1586+stepperX.currentPosition())/12890));
-  return output_speed;
-  }
-*/
+
+
 
